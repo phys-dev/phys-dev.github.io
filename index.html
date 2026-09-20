@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Физика и код</title>
+<meta name="description" content="Учебные пособия по физике ускорителей, школьной физике и программированию в научных исследованиях">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=PT+Sans:wght@400;700&family=PT+Mono&display=swap">
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --ink: #1a222c;
+    --ink-2: #4a5563;
+    --ink-3: #7c8794;
+    --rule: #d7dde5;
+    --accent: #1f4e9c;
+    --accent-ink: #163a75;
+    --accent-soft: #e4ebf7;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f151c;
+      --surface: #161e27;
+      --ink: #e6ebf0;
+      --ink-2: #aeb8c4;
+      --ink-3: #7d8896;
+      --rule: #2a3542;
+      --accent: #8db1ec;
+      --accent-ink: #b9cff4;
+      --accent-soft: #1c2a3f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f151c;
+    --surface: #161e27;
+    --ink: #e6ebf0;
+    --ink-2: #aeb8c4;
+    --ink-3: #7d8896;
+    --rule: #2a3542;
+    --accent: #8db1ec;
+    --accent-ink: #b9cff4;
+    --accent-soft: #1c2a3f;
+  }
+  * { box-sizing: border-box; }
+  html { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "PT Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    padding-block: 0;
+    padding-inline: 20px;
+  }
+  main { max-width: 760px; margin: 0 auto; padding-block: 56px 32px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover, a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+  header.masthead { display: grid; gap: 14px; margin-bottom: 48px; }
+  .masthead h1 {
+    font-family: "PT Serif", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    line-height: 1.08;
+    margin: 0;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .masthead p { margin: 0; max-width: 60ch; color: var(--ink-2); font-size: 1.05rem; }
+  .masthead .org {
+    font-family: "PT Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.85rem;
+    color: var(--ink-3);
+    letter-spacing: 0.02em;
+  }
+
+  section { margin-bottom: 44px; }
+  h2 {
+    font-family: "PT Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: 1.55rem;
+    margin: 0 0 6px;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  .lede { margin: 0 0 18px; color: var(--ink-2); max-width: 62ch; }
+
+  .books { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .books li { border-bottom: 1px solid var(--rule); padding: 18px 0; display: grid; gap: 4px; }
+  .books .title {
+    font-family: "PT Serif", Georgia, serif;
+    font-size: 1.25rem;
+    line-height: 1.25;
+    color: var(--accent-ink);
+  }
+  .books .about { color: var(--ink-2); margin: 0; }
+  .books .meta {
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    font-family: "PT Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.82rem;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .books .meta a { color: var(--ink-3); }
+  .books .meta a:hover { color: var(--accent); }
+  .books .meta .k { color: var(--ink-3); }
+  .books .meta .k::after { content: " "; }
+
+  .practicum { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .practicum li {
+    display: grid; grid-template-columns: 11rem 1fr; gap: 6px 20px;
+    padding: 12px 0; border-top: 1px solid var(--rule);
+  }
+  .practicum li:last-child { border-bottom: 1px solid var(--rule); }
+  .practicum .course { font-weight: 700; color: var(--ink); }
+  .practicum .tasks { color: var(--ink-2); }
+  .practicum .tasks a { white-space: nowrap; }
+  @media (max-width: 560px) {
+    .practicum li { grid-template-columns: 1fr; }
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    display: grid; gap: 8px;
+  }
+  footer p { margin: 0; max-width: 62ch; }
+  @media (prefers-reduced-motion: no-preference) {
+    a { transition: color 120ms ease; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header class="masthead">
+    <div class="org">github.com/phys-dev</div>
+    <h1>Физика и&nbsp;код</h1>
+    <p>Учебные пособия по физике ускорителей, школьной физике и программированию
+       в научных исследованиях. Все пособия открыты, собираются автоматически
+       из репозиториев и читаются в браузере без установки чего-либо.</p>
+  </header>
+
+  <section>
+    <h2>Физика ускорителей</h2>
+    <p class="lede">Три пособия по курсам магистратуры: каждый вопрос разобран в отдельной
+       тетради с выводом формул в СГС и расчётом на Python.</p>
+    <ul class="books">
+      <li>
+        <a class="title" href="https://phys-dev.github.io/collective-effects-book/">Коллективные эффекты в ускорителях</a>
+        <p class="about">Кильватерные поля и импедансы, неустойчивости в моделях макрочастиц,
+           кинетическое описание через уравнение Власова. Семнадцать вопросов.</p>
+        <div class="meta"><span><span class="k">исходники</span><a href="https://github.com/phys-dev/collective-effects-book">collective-effects-book</a></span><span>Jupyter Book</span></div>
+      </li>
+      <li>
+        <a class="title" href="https://phys-dev.github.io/nonlinear-dynamics-book/">Нелинейная динамика в ускорителях</a>
+        <p class="about">Параметрический резонанс и адиабатические инварианты, сдвиги бетатронных
+           частот, компенсация эффектов встречи, ионное облако вдоль поезда сгустков. Восемь задач.</p>
+        <div class="meta"><span><span class="k">исходники</span><a href="https://github.com/phys-dev/nonlinear-dynamics-book">nonlinear-dynamics-book</a></span><span>Jupyter Book</span></div>
+      </li>
+      <li>
+        <a class="title" href="https://phys-dev.github.io/electrical-strength-book/">Электрическая прочность</a>
+        <p class="about">Пробой в вакууме, газах и твёрдых диэлектриках, тёмные токи, мультипактор,
+           механизмы Таунсенда и стримера, инженерные критерии изоляции. Восемь тем.</p>
+        <div class="meta"><span><span class="k">исходники</span><a href="https://github.com/phys-dev/electrical-strength-book">electrical-strength-book</a></span><span>Jupyter Book</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Школьная физика</h2>
+    <p class="lede">Интерактивные уроки для основной школы по учебнику И. М. Перышкина
+       и задачнику А. Е. Марона.</p>
+    <ul class="books">
+      <li>
+        <a class="title" href="https://phys-dev.github.io/school-phys-book/">Физика 7–9 классов</a>
+        <p class="about">Каждый урок содержит теорию, модель, которой можно управлять прямо
+           на странице, опыт с измерениями, задачи с разбором и домашнее задание.
+           Готов раздел «Тепловые явления» 8 класса, 28 уроков.</p>
+        <div class="meta"><span><span class="k">исходники</span><a href="https://github.com/phys-dev/school-phys-book">school-phys-book</a></span><span>Jupyter Book</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Программирование и машинное обучение</h2>
+    <p class="lede">Для тех, кто пишет код в физических исследованиях: от Linux и Git
+       до нейросетей.</p>
+    <ul class="books">
+      <li>
+        <a class="title" href="https://phys-dev.github.io/soft-dev-book/">Разработка и применение ПО в физических исследованиях</a>
+        <p class="about">Linux, Python, Git, тестирование, контейнеры, профилирование
+           и оптимизация: как писать надёжный научный код и сопровождать его.</p>
+        <div class="meta"><span><span class="k">исходники</span><a href="https://github.com/phys-dev/soft-dev-book">soft-dev-book</a></span><span>mdBook</span></div>
+      </li>
+      <li>
+        <a class="title" href="https://phys-dev.github.io/basic-ml-book/">Базовые методы ИИ в физических исследованиях</a>
+        <p class="about">Регрессия, классификация, деревья и случайный лес, кластеризация,
+           снижение размерности, нейросети. С практикумом и вопросами для самопроверки.</p>
+        <div class="meta"><span><span class="k">исходники</span><a href="https://github.com/phys-dev/basic-ml-book">basic-ml-book</a></span><span>mdBook</span></div>
+      </li>
+      <li>
+        <a class="title" href="https://phys-dev.github.io/ml-recipe-book/">Рецепты машинного обучения</a>
+        <p class="about">Двенадцать коротких тетрадей с примерами обучения моделей scikit-learn
+           на встроенных датасетах: от линейной регрессии до многослойного перцептрона.</p>
+        <div class="meta"><span><span class="k">исходники</span><a href="https://github.com/phys-dev/ml-recipe-book">ml-recipe-book</a></span><span>Jupyter Book</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Практикум</h2>
+    <p class="lede">Задания выдаются через GitHub Classroom из репозиториев-шаблонов.</p>
+    <ul class="practicum">
+      <li>
+        <span class="course">Linux</span>
+        <span class="tasks"><a href="https://github.com/phys-dev/booting-linux-task">установка системы</a>,
+          <a href="https://github.com/phys-dev/linux-structure-task">процессы и потоки вывода</a>,
+          <a href="https://github.com/phys-dev/linux-tools-task">инструменты командной строки</a></span>
+      </li>
+      <li>
+        <span class="course">Python</span>
+        <span class="tasks"><a href="https://github.com/phys-dev/python-algo-task">эффективный код</a>,
+          <a href="https://github.com/phys-dev/markov-chain-task">цепи Маркова</a>,
+          <a href="https://github.com/phys-dev/review-code-task">ревью чужого кода</a>,
+          <a href="https://github.com/phys-dev/kitty-startup-task">жизненный цикл ПО</a></span>
+      </li>
+      <li>
+        <span class="course">Машинное обучение</span>
+        <span class="tasks"><a href="https://github.com/phys-dev/linear-regression-task">линейная регрессия</a>,
+          <a href="https://github.com/phys-dev/logistic-regression-task">логистическая регрессия</a>,
+          <a href="https://github.com/phys-dev/knn-task">k ближайших соседей</a>,
+          <a href="https://github.com/phys-dev/neural-network-classification-task">нейросеть для классификации</a>,
+          <a href="https://github.com/phys-dev/kaggle-getting-started-task">соревнование Kaggle</a></span>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Пособия составил <strong>Федоров Вячеслав Васильевич</strong>, младший научный сотрудник
+       Института ядерной физики им. Г. И. Будкера СО РАН.</p>
+    <p>Замечания и предложения принимаются через issues и pull requests в репозитории
+       соответствующего пособия. Почта для связи: <a href="mailto:slava@fuodorov.ru">slava@fuodorov.ru</a>.
+       Материалы пока только на русском языке.</p>
+  </footer>
+</main>
+</body>
+</html>
